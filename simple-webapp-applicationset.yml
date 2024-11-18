@@ -19,7 +19,7 @@ spec:
     spec:
       project: default
       sources:
-        - repoURL: git@github.com:marcobejarano/Implementing-GitOps-with-Kubernetes.git
+        - repoURL: https://github.com/marcobejarano/Implementing-GitOps-with-Kubernetes.git
           targetRevision: "{{values.branch}}"
           path: ./simple-webapp
       destination:
@@ -31,3 +31,33 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+          
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+  # name: simple-webapp
+  # namespace: argocd
+# spec:
+  # generators:
+    # - list:
+        # elements:
+          # - name: in-cluster
+            # branch: main
+  # template:
+    # metadata:
+      # name: "{{name}}-simple-webapp"
+    # spec:
+      # project: default
+      # sources:
+        # - repoURL: https://github.com/marcobejarano/Implementing-GitOps-with-Kubernetes.git
+          # targetRevision: "{{branch}}"
+          # path: ./simple-webapp
+      # destination:
+        # server: https://kubernetes.default.svc
+        # namespace: "argocd"
+      # syncPolicy:
+        # automated:
+          # prune: false
+          # selfHeal: true
+        # syncOptions:
+          # - CreateNamespace=true
